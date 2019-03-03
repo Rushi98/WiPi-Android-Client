@@ -10,7 +10,7 @@
         android:label="Session List"
         tools:layout="@layout/fragment_session_list">
         <action
-            android:id="@+id/action_show_session_data"
+            android:id="@+id/show_session_data_action"
             app:destination="@id/fragment_session_data"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -22,5 +22,9 @@
         android:id="@+id/fragment_session_data"
         android:name="com.example.wipi.sessions.SessionDataFragment"
         android:label="Session Data"
-        tools:layout="@layout/fragment_session_data" />
+        tools:layout="@layout/fragment_session_data" >
+        <argument
+            android:name="startTime"
+            app:argType="string" />
+    </fragment>
 </navigation>
