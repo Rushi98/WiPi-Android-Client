@@ -3,4 +3,23 @@
     <string name="last_hit">last hit</string>
     <string name="distance">distance</string>
     <string name="confidence">confidence</string>
+
+    <string name="not_connected">NOT CONNECTED</string>
+    <string name="connected">CONNECTED</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="connect">Connect</string>
+    <string name="sessions">Sessions</string>
+    <string name="map">MaP</string>
+    <string name="start_scan">Start Scan</string>
+    <string name="stop_scan">Stop Scan</string>
+    <string name="scanning">Scanning</string>
+    <string name="not_scanning">Not Scanning</string>
+    <string name="wipi_list">WiPi List</string>
+
+    <string name="map_mode">MaP Mode</string>
+    <string name="end_map_mode">End MaP Mode</string>
+    <string name="new_joins">New Joins</string>
+    <string name="all_joins">All Joins</string>
+
+
 </resources>

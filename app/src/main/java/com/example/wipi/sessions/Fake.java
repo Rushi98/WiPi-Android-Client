@@ -1,6 +1,7 @@
 package com.example.wipi.sessions;
 
 import com.example.wipi.models.Attendance;
+import com.example.wipi.models.MapJoins;
 
 import java.text.ParsePosition;
 import java.util.ArrayList;
@@ -63,5 +64,32 @@ public class Fake {
             sessionList.add(TIMESTAMP_FORMAT.format(before));
         }
         return sessionList;
+    }
+
+    public static List<MapJoins> getJoins (boolean isNewJoin) {
+        Random random = new Random();
+        int size;
+        if (isNewJoin) {
+            size = 2+random.nextInt(5);
+        } else {
+            size = 20+random.nextInt(20);
+        }
+
+        List<MapJoins> mapJoinsList = new ArrayList<>();
+        for (int i=0; i<size; i++) {
+            int gender = random.nextInt(2);
+            String name;
+            String surname;
+            if (gender == 0) {
+                name = maleNames[random.nextInt(maleNames.length)];
+            } else {
+                name = femaleNames[random.nextInt(femaleNames.length)];
+            }
+            surname = surnames[random.nextInt(surnames.length)];
+            MapJoins mapJoin = new MapJoins(String.format("%s %s", name, surname));
+            mapJoinsList.add(mapJoin);
+        }
+
+        return mapJoinsList;
     }
 }
