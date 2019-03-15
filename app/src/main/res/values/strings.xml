@@ -20,6 +20,8 @@
     <string name="end_map_mode">End MaP Mode</string>
     <string name="new_joins">New Joins</string>
     <string name="all_joins">All Joins</string>
+    <string name="network_name">network name</string>
+    <string name="label_url">url</string>
 
 
 </resources>

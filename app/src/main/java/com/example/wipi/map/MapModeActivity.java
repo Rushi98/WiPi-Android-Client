@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.wipi.R;
 import com.example.wipi.models.MapJoins;
@@ -15,20 +16,27 @@ import com.google.android.material.button.MaterialButton;
 import java.util.List;
 import java.util.Locale;
 
+import static com.example.wipi.sessions.Fake.NETWORK_NAME;
+import static com.example.wipi.sessions.Fake.REGISTRATION_URL;
+
 /**
  * @author Omkar Kanade.
  */
 public class MapModeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnEndMap;
-    RecyclerView newJoinsRv;
-    RecyclerView allJoinsRv;
+    private RecyclerView newJoinsRv;
+    private RecyclerView allJoinsRv;
 
     private MaterialButton newJoinsBtn;
     private MaterialButton allJoinsBtn;
+    private TextView networkNameTv;
+    private TextView registrationUrlTv;
 
-    List<MapJoins> newJoins;
-    List<MapJoins> allJoins;
+    private List<MapJoins> newJoins;
+    private List<MapJoins> allJoins;
+    private String networkName;
+    private String registrationUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,12 @@ public class MapModeActivity extends AppCompatActivity implements View.OnClickLi
         allJoins = Fake.getJoins(false);
         allJoins.addAll(newJoins);
         allJoinsRv.setAdapter(new MapJoinsAdapter(allJoins));
+
+        networkNameTv = findViewById(R.id.tv_network_name);
+        registrationUrlTv = findViewById(R.id.tv_reg_url);
+
+        networkName = Fake.NETWORK_NAME;
+        registrationUrl = Fake.REGISTRATION_URL;
     }
 
     @Override
@@ -60,6 +74,8 @@ public class MapModeActivity extends AppCompatActivity implements View.OnClickLi
                 "%s (%d)",getString(R.string.new_joins), newJoins.size()));
         allJoinsBtn.setText(String.format(Locale.ENGLISH,
                 "%s (%d)",getString(R.string.all_joins), allJoins.size()));
+        networkNameTv.setText(networkName);
+        registrationUrlTv.setText(registrationUrl);
     }
 
     @Override
