@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".map.MapModeActivity"></activity>
+        <activity android:name=".data_display.PeopleActivity"/>
+        <activity android:name=".map.MapModeActivity" />
         <activity android:name=".home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".sessions.SessionsActivity" />
+        <activity android:name=".data_display.SessionsActivity" />
     </application>
 
 </manifest>

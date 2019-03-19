@@ -10,14 +10,11 @@ import android.widget.TextView;
 
 import com.example.wipi.R;
 import com.example.wipi.models.MapJoins;
-import com.example.wipi.sessions.Fake;
+import com.example.wipi.data_display.Fake;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 import java.util.Locale;
-
-import static com.example.wipi.sessions.Fake.NETWORK_NAME;
-import static com.example.wipi.sessions.Fake.REGISTRATION_URL;
 
 /**
  * @author Omkar Kanade.

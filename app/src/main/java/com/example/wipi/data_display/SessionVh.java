@@ -1,4 +1,4 @@
-package com.example.wipi.sessions;
+package com.example.wipi.data_display;
 
 import android.view.View;
 import android.widget.TextView;
