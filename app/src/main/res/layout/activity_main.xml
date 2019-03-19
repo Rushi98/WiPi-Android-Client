@@ -1,70 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="12dp"
-    android:orientation="vertical"
-    tools:context=".home.MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_is_connected"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/not_connected"
-        android:gravity="center"
-        android:textSize="42sp"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
+        tools:context=".home.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_is_scanning"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:textSize="28sp"
-        android:gravity="top|center" />
+        <TextView
+            android:id="@+id/tv_is_connected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/not_connected"
+            android:textSize="42sp" />
 
-    <Button
-        android:id="@+id/btn_connect"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:textAllCaps="false"
-        android:textSize="32sp"
-        android:text="@string/connect" />
+        <TextView
+            android:id="@+id/tv_is_scanning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|center"
+            android:textSize="28sp" />
 
-    <Button
-        android:id="@+id/btn_sessions"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:textAllCaps="false"
-        android:textSize="32sp"
-        android:text="@string/sessions"/>
+        <Button
+            android:id="@+id/btn_connect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/connect"
+            android:textAllCaps="false"
+            android:textSize="32sp" />
 
-    <Button
-        android:id="@+id/btn_scan"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:textAllCaps="false"
-        android:textSize="32sp"
-        android:text="@string/start_scan"/>
+        <Button
+            android:id="@+id/btn_sessions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/sessions"
+            android:textAllCaps="false"
+            android:textSize="32sp" />
 
-    <Button
-        android:id="@+id/btn_MaP"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="10dp"
-        android:textAllCaps="false"
-        android:textSize="32sp"
-        android:text="@string/map"/>
+        <Button
+            android:id="@+id/btn_people"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/people"
+            android:textAllCaps="false"
+            android:textSize="32sp" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_scan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/start_scan"
+            android:textAllCaps="false"
+            android:textSize="32sp" />
+
+        <Button
+            android:id="@+id/btn_MaP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/map"
+            android:textAllCaps="false"
+            android:textSize="32sp" />
+
+    </LinearLayout>
 
 
+</ScrollView>

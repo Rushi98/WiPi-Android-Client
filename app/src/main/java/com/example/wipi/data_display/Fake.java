@@ -1,4 +1,4 @@
-package com.example.wipi.sessions;
+package com.example.wipi.data_display;
 
 import com.example.wipi.models.Attendance;
 import com.example.wipi.models.MapJoins;

@@ -3,7 +3,6 @@ package com.example.wipi.home;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.wipi.R;
+import com.example.wipi.data_display.PeopleActivity;
 import com.example.wipi.map.MapModeActivity;
-import com.example.wipi.sessions.SessionsActivity;
+import com.example.wipi.data_display.SessionsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnScan;
     private Button btnMaP;
     private Button btnSessions;
+    private Button peopleBtn;
 
     private boolean isConnected;
     private boolean isScanning;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnConnect = findViewById(R.id.btn_connect);
         btnMaP = findViewById(R.id.btn_MaP);
         btnSessions = findViewById(R.id.btn_sessions);
+        peopleBtn = findViewById(R.id.btn_people);
         btnScan = findViewById(R.id.btn_scan);
 
         toggleButtonsVisibility(isConnected);
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnConnect.setOnClickListener(this);
         btnMaP.setOnClickListener(this);
         btnSessions.setOnClickListener(this);
+        peopleBtn.setOnClickListener(this);
         btnScan.setOnClickListener(this);
     }
 
@@ -71,11 +74,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     showDisconnectDialog();
                 }
                 break;
-            case (R.id.btn_sessions):
+            case (R.id.btn_sessions): {
                 Intent sessionIntent = new Intent(MainActivity.this,
                         SessionsActivity.class);
                 startActivity(sessionIntent);
-                break;
+            } break;
+            case R.id.btn_people: {
+                Intent peopleIntent = new Intent(this, PeopleActivity.class);
+                startActivity(peopleIntent);
+            } break;
             case (R.id.btn_scan):
                 if (!isScanning) {
                     isScanning = true;
@@ -105,11 +112,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (condition) {
             btnMaP.setVisibility(View.VISIBLE);
             btnSessions.setVisibility(View.VISIBLE);
+            peopleBtn.setVisibility(View.VISIBLE);
             btnScan.setVisibility(View.VISIBLE);
             btnConnect.setText(getString(R.string.disconnect));
         } else {
             btnMaP.setVisibility(View.INVISIBLE);
             btnSessions.setVisibility(View.INVISIBLE);
+            peopleBtn.setVisibility(View.GONE);
             btnScan.setVisibility(View.INVISIBLE);
             btnConnect.setText(getString(R.string.connect));
         }
