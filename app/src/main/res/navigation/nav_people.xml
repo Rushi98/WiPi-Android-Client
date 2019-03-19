@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_people"
+    app:startDestination="@id/fragment_people_list">
+    <fragment
+        android:id="@+id/fragment_people_list"
+        android:name="com.example.wipi.data_display.PeopleListFragment"
+        android:label="People List"
+        tools:layout="@layout/fragment_people_list">
+        <action
+            android:id="@+id/show_person_data_action"
+            app:destination="@id/fragment_person_data"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@id/fragment_people_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_person_data"
+        android:name="com.example.wipi.data_display.PersonDataFragment"
+        android:label="Person Data"
+        tools:layout="@layout/fragment_person_data">
+        <argument
+            android:name="macId"
+            app:argType="string" />
+    </fragment>
+</navigation>
