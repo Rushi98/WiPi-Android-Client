@@ -34,7 +34,7 @@ public class SessionDataFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_session_data, container, false);
         RecyclerView attendanceListRv = view.findViewById(R.id.rv_attendance_list);
         List<Attendance> attendanceList = Fake.getAttendance(startTime);
-        attendanceListRv.setAdapter(new SessionDataAdapter(attendanceList));
+        attendanceListRv.setAdapter(new AttendanceListAdapter(attendanceList));
         return view;
     }
 

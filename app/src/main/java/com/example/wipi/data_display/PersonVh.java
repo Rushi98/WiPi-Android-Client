@@ -25,7 +25,7 @@ public class PersonVh extends RecyclerView.ViewHolder {
     public void populate(Person person) {
         nameBtn.setText(person.name);
         itemView.setOnClickListener(v -> {
-            PeopleListFragmentDirections.ShowPersonDataAction action = PeopleListFragmentDirections.showPersonDataAction(person.deviceMac);
+            PeopleListFragmentDirections.ShowPersonDataAction action = PeopleListFragmentDirections.showPersonDataAction(person);
             Navigation.findNavController(v).navigate(action);
         });
     }
