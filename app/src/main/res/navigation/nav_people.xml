@@ -24,7 +24,7 @@
         android:label="Person Data"
         tools:layout="@layout/fragment_person_data">
         <argument
-            android:name="macId"
-            app:argType="string" />
+            android:name="person"
+            app:argType="com.example.wipi.models.Person" />
     </fragment>
 </navigation>

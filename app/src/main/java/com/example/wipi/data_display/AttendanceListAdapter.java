@@ -15,14 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * @author Rushikesh Jogdand.
  */
-public class SessionDataAdapter extends RecyclerView.Adapter<AttendanceVh> {
+public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceVh> {
 
     private List<Attendance> attendanceList;
 
-    public SessionDataAdapter(final List<Attendance> attendanceList) {
+    public AttendanceListAdapter(final List<Attendance> attendanceList) {
         this.attendanceList = attendanceList;
     }
-
 
     @NonNull
     @Override
