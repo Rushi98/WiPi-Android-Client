@@ -1,23 +1,25 @@
 package com.example.wipi.home;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wipi.R;
 import com.example.wipi.data_display.PeopleActivity;
-import com.example.wipi.map.MapModeActivity;
 import com.example.wipi.data_display.SessionsActivity;
+import com.example.wipi.map.MapModeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -63,6 +65,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnScan.setOnClickListener(this);
     }
 
+    public void toggleButtonsVisibility(boolean condition) {
+        if (condition) {
+            btnMaP.setVisibility(View.VISIBLE);
+            btnSessions.setVisibility(View.VISIBLE);
+            peopleBtn.setVisibility(View.VISIBLE);
+            btnScan.setVisibility(View.VISIBLE);
+            btnConnect.setText(getString(R.string.disconnect));
+        } else {
+            btnMaP.setVisibility(View.INVISIBLE);
+            btnSessions.setVisibility(View.INVISIBLE);
+            peopleBtn.setVisibility(View.GONE);
+            btnScan.setVisibility(View.INVISIBLE);
+            btnConnect.setText(getString(R.string.connect));
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -108,29 +125,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void toggleButtonsVisibility (boolean condition) {
-        if (condition) {
-            btnMaP.setVisibility(View.VISIBLE);
-            btnSessions.setVisibility(View.VISIBLE);
-            peopleBtn.setVisibility(View.VISIBLE);
-            btnScan.setVisibility(View.VISIBLE);
-            btnConnect.setText(getString(R.string.disconnect));
-        } else {
-            btnMaP.setVisibility(View.INVISIBLE);
-            btnSessions.setVisibility(View.INVISIBLE);
-            peopleBtn.setVisibility(View.GONE);
-            btnScan.setVisibility(View.INVISIBLE);
-            btnConnect.setText(getString(R.string.connect));
+    public boolean scanWipiNetworks() {
+        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+        assert manager != null;
+        if (!manager.isWifiEnabled()) {
+            Toast.makeText(this, "Please enable wifi", Toast.LENGTH_SHORT).show();
+            return false;
         }
-    }
-
-    public void scanWipiNetworks () {
+        List<ScanResult> lastScanRes = manager.getScanResults();
         wipiList.clear();
-        Random random = new Random();
-        int wipiCount = random.nextInt(5)+4;
-        for (int i=0; i<wipiCount; i++) {
-            wipiList.add(i, "WiPi #"+(i+1));
+        for (ScanResult res : lastScanRes) {
+            if (res.SSID.startsWith("wipi")) {
+                wipiList.add(res.SSID);
+            }
         }
+        return true;
     }
 
     public void modifyLayoutOnConnected () {
@@ -150,7 +159,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void showWipiListDialog () {
         // scan and update the wipiList
-        scanWipiNetworks();
+        if (!scanWipiNetworks()) {
+            return;
+        }
 
         CharSequence[] wipis = wipiList.toArray(new String[wipiList.size()]);
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
