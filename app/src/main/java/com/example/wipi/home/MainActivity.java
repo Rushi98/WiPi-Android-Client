@@ -1,8 +1,14 @@
 package com.example.wipi.home;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +21,11 @@ import com.example.wipi.data_display.PeopleActivity;
 import com.example.wipi.data_display.SessionsActivity;
 import com.example.wipi.map.MapModeActivity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,15 +37,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvIsConnected;
     private TextView tvIsScanning;
 
+//    private String networkSsid = "wipi";
+
     private Button btnConnect;
     private Button btnScan;
     private Button btnMaP;
     private Button btnSessions;
     private Button peopleBtn;
 
+    private boolean connectedStatus;
     private boolean isConnected;
     private boolean isScanning;
     private List<String> wipiList;
+
+//    WifiManager manager;
+//    WifiConfiguration configuration;
+//
+//    IntentFilter networkFilter;
+//
+//    int netId;
+//    BroadcastReceiver networkReceiver;
 
     private String connectedWipiName;
 
@@ -43,6 +65,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        networkFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+//        manager = (WifiManager) getApplicationContext().
+//                getSystemService(Context.WIFI_SERVICE);
+//
+//        configuration = new WifiConfiguration();
+//        configuration.SSID = String.format("\"%s\"", networkSsid);
+//
+//        netId = manager.addNetwork(configuration);
+
+        connectedStatus = false;
         isConnected = false;
         isScanning = false;
         wipiList = new ArrayList<>();
@@ -63,7 +95,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSessions.setOnClickListener(this);
         peopleBtn.setOnClickListener(this);
         btnScan.setOnClickListener(this);
+
+//        networkReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+//                    if (isConnected) {
+//                        isConnected = manager.enableNetwork(netId, true);
+//                        return;
+//                    }
+//                    Log.e("network change", "network change detected");
+//
+//                    boolean noConnection = intent.getBooleanExtra(
+//                            ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+//
+//                    if (!noConnection) {
+//                        Log.e("connection status", "connected");
+//
+//                        manager.disconnect();
+//                        manager.enableNetwork(netId, true);
+//                        manager.reconnect();
+//                        isConnected = true;
+//                    }
+//                    else {
+//                        Log.e("connection status", "disconnected");
+//                        isConnected = false;
+//                    }
+//                }
+//            }
+//        };
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        registerReceiver(networkReceiver, networkFilter);
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//
+//        if (networkReceiver != null) {
+//            unregisterReceiver(networkReceiver);
+//        }
+//    }
 
     public void toggleButtonsVisibility(boolean condition) {
         if (condition) {
@@ -85,8 +162,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case (R.id.btn_connect):
-                if (!isConnected) {
-                    showWipiListDialog();
+                if (!connectedStatus) {
+//                    showWipiListDialog();
+                    connectedWipiName = "wipi";
+                    modifyLayoutOnConnected();
                 } else {
                     showDisconnectDialog();
                 }
@@ -108,6 +187,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     String display_text = connectedWipiName+" : "+getString(R.string.scanning);
                     tvIsScanning.setText(display_text);
+
+                    new BackgroundHttp().execute("startScan");
                 } else {
                     isScanning = false;
                     btnScan.setText(getString(R.string.start_scan));
@@ -115,11 +196,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     String display_text = connectedWipiName+" : "+getString(R.string.not_scanning);
                     tvIsScanning.setText(display_text);
+
+                    new BackgroundHttp().execute("stopScan");
                 }
                 break;
             case (R.id.btn_MaP):
                 Intent mapIntent = new Intent(MainActivity.this,
                         MapModeActivity.class);
+                new BackgroundHttp().execute("startMap");
                 startActivity(mapIntent);
                 break;
         }
@@ -145,8 +229,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void modifyLayoutOnConnected () {
         boolean success = true;
         if (success) {
-            isConnected = true;
-            toggleButtonsVisibility(isConnected);
+            connectedStatus = true;
+            toggleButtonsVisibility(connectedStatus);
             tvIsConnected.setText(getString(R.string.connected));
             String display_text = connectedWipiName+" : "+getString(R.string.not_scanning);
             tvIsScanning.setText(display_text);
@@ -170,6 +254,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialogBuilder.setItems(wipis, (dialog, which) -> {
             connectedWipiName = wipis[which].toString();
             dialog.dismiss();
+//            connectToWifi();
             modifyLayoutOnConnected();
         });
 
@@ -182,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.setMessage("Are you sure you want to disconnect?")
                 .setPositiveButton("Yes", (dialog, which) -> {
                     isScanning = false;
-                    isConnected = false;
+                    connectedStatus = false;
                     toggleButtonsVisibility(isConnected);
                     tvIsConnected.setText(getString(R.string.not_connected));
                     tvIsScanning.setText("");
@@ -191,5 +276,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+//    public void connectToWifi () {
+//        configuration = new WifiConfiguration();
+//        configuration.SSID = String.format("\"%s\"", connectedWipiName);
+
+//        manager = (WifiManager) getApplicationContext().
+//                getSystemService(Context.WIFI_SERVICE);
+
+//        netId = manager.addNetwork(configuration);
+//    }
+
+
+    private static class BackgroundHttp extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                URL url = new URL("http://192.168.12.1/" + strings[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null)
+                    result.append(inputLine).append("\n");
+
+                in.close();
+                connection.disconnect();
+                return result.toString();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
     }
 }
