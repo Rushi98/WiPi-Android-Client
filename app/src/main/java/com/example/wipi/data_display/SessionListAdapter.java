@@ -18,6 +18,11 @@ public class SessionListAdapter extends RecyclerView.Adapter<SessionVh> {
 
     private List<String> sessionList;
 
+    public void setSessionList(List<String> sessionList) {
+        this.sessionList = sessionList;
+        notifyDataSetChanged();
+    }
+
     public SessionListAdapter(final List<String> sessionList) {
         this.sessionList = sessionList;
     }

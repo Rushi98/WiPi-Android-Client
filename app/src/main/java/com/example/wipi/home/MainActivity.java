@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvIsConnected;
     private TextView tvIsScanning;
 
-//    private String networkSsid = "wipi";
+    private String networkSsid = "wipi";
 
     private Button btnConnect;
     private Button btnScan;
@@ -50,7 +51,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isScanning;
     private List<String> wipiList;
 
-//    WifiManager manager;
+    private List<String> sessionData;
+
+    WifiManager manager;
 //    WifiConfiguration configuration;
 //
 //    IntentFilter networkFilter;
@@ -66,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 //        networkFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-//        manager = (WifiManager) getApplicationContext().
-//                getSystemService(Context.WIFI_SERVICE);
+        manager = (WifiManager) getApplicationContext().
+                getSystemService(Context.WIFI_SERVICE);
 //
 //        configuration = new WifiConfiguration();
 //        configuration.SSID = String.format("\"%s\"", networkSsid);
@@ -95,52 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSessions.setOnClickListener(this);
         peopleBtn.setOnClickListener(this);
         btnScan.setOnClickListener(this);
-
-//        networkReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
-//                    if (isConnected) {
-//                        isConnected = manager.enableNetwork(netId, true);
-//                        return;
-//                    }
-//                    Log.e("network change", "network change detected");
-//
-//                    boolean noConnection = intent.getBooleanExtra(
-//                            ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
-//
-//                    if (!noConnection) {
-//                        Log.e("connection status", "connected");
-//
-//                        manager.disconnect();
-//                        manager.enableNetwork(netId, true);
-//                        manager.reconnect();
-//                        isConnected = true;
-//                    }
-//                    else {
-//                        Log.e("connection status", "disconnected");
-//                        isConnected = false;
-//                    }
-//                }
-//            }
-//        };
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        registerReceiver(networkReceiver, networkFilter);
-//    }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//
-//        if (networkReceiver != null) {
-//            unregisterReceiver(networkReceiver);
-//        }
-//    }
 
     public void toggleButtonsVisibility(boolean condition) {
         if (condition) {
@@ -163,9 +121,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case (R.id.btn_connect):
                 if (!connectedStatus) {
-//                    showWipiListDialog();
-                    connectedWipiName = "wipi";
-                    modifyLayoutOnConnected();
+                    showWipiListDialog();
+//                    connectedWipiName = "wipi";
+//                    modifyLayoutOnConnected();
                 } else {
                     showDisconnectDialog();
                 }
@@ -188,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String display_text = connectedWipiName+" : "+getString(R.string.scanning);
                     tvIsScanning.setText(display_text);
 
-                    new BackgroundHttp().execute("startScan");
+                    new ScanRequest().execute("startScan");
                 } else {
                     isScanning = false;
                     btnScan.setText(getString(R.string.start_scan));
@@ -197,20 +155,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String display_text = connectedWipiName+" : "+getString(R.string.not_scanning);
                     tvIsScanning.setText(display_text);
 
-                    new BackgroundHttp().execute("stopScan");
+                    new ScanRequest().execute("stopScan");
                 }
                 break;
             case (R.id.btn_MaP):
                 Intent mapIntent = new Intent(MainActivity.this,
                         MapModeActivity.class);
-                new BackgroundHttp().execute("startMap");
+                new ScanRequest().execute("startMap");
                 startActivity(mapIntent);
                 break;
         }
     }
 
     public boolean scanWipiNetworks() {
-        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
+//        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         assert manager != null;
         if (!manager.isWifiEnabled()) {
             Toast.makeText(this, "Please enable wifi", Toast.LENGTH_SHORT).show();
@@ -254,8 +212,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dialogBuilder.setItems(wipis, (dialog, which) -> {
             connectedWipiName = wipis[which].toString();
             dialog.dismiss();
-//            connectToWifi();
-            modifyLayoutOnConnected();
+//            manager.disconnect();
+            if (connectToWifi()) {
+                modifyLayoutOnConnected();
+            } else {
+                Toast.makeText(getApplicationContext(), "Could not connect",
+                        Toast.LENGTH_SHORT).show();
+            }
         });
 
         AlertDialog wipiDialog = dialogBuilder.create();
@@ -266,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setMessage("Are you sure you want to disconnect?")
                 .setPositiveButton("Yes", (dialog, which) -> {
+                    manager.disconnect();
                     isScanning = false;
                     connectedStatus = false;
                     toggleButtonsVisibility(isConnected);
@@ -278,18 +242,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         alertDialog.show();
     }
 
-//    public void connectToWifi () {
-//        configuration = new WifiConfiguration();
-//        configuration.SSID = String.format("\"%s\"", connectedWipiName);
+    public boolean connectToWifi () {
+        WifiConfiguration configuration = new WifiConfiguration();
+        configuration.SSID = String.format("\"%s\"", connectedWipiName);
 
-//        manager = (WifiManager) getApplicationContext().
-//                getSystemService(Context.WIFI_SERVICE);
+        manager = (WifiManager) getApplicationContext().
+                getSystemService(Context.WIFI_SERVICE);
 
-//        netId = manager.addNetwork(configuration);
-//    }
+        int netId = manager.addNetwork(configuration);
+        manager.disconnect();
+        manager.enableNetwork(netId, true);
+        manager.reconnect();
+        if (manager.reconnect()) {
+            return true;
+        }
+        return false;
+//        WifiInfo wifiInfo = manager.getConnectionInfo();
+//        String ssid = wifiInfo.getSSID();
+//
+//        if (ssid.equals(connectedWipiName)) {
+//            return true;
+//        }
+//        return connectToWifi();
+//        return false;
+    }
 
 
-    private static class BackgroundHttp extends AsyncTask<String, Void, String> {
+    private static class ScanRequest extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -311,6 +290,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+        }
+    }
+
+    public static class SessionRequest extends AsyncTask<String, Void, String> {
+
+//        public interface AsyncResponse {
+//            void processResponse (Object response);
+//        }
+//
+//        public AsyncResponse asyncResponse;
+//
+//        public SessionRequest (AsyncResponse asyncResponse) {
+//            this.asyncResponse = asyncResponse;
+//        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                URL url = new URL("http://192.168.12.1/" + strings[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String inputLine;
+                while ((inputLine = in.readLine()) != null)
+                    result.append(inputLine).append("\n");
+
+                in.close();
+                connection.disconnect();
+                return result.toString();
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+//            parse the JSON object & update sessionData
+
+            Object result = null;
+//            asyncResponse.processResponse(result);
         }
     }
 }
