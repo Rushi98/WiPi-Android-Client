@@ -19,6 +19,11 @@ public class AttendanceListAdapter extends RecyclerView.Adapter<AttendanceVh> {
 
     private List<Attendance> attendanceList;
 
+    public void setAttendanceList (List<Attendance> attendanceList) {
+        this.attendanceList = attendanceList;
+        notifyDataSetChanged();
+    }
+
     public AttendanceListAdapter(final List<Attendance> attendanceList) {
         this.attendanceList = attendanceList;
     }

@@ -13,6 +13,7 @@ import com.example.wipi.R;
 import com.example.wipi.models.Attendance;
 import com.example.wipi.models.Person;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,10 +27,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PersonDataFragment extends Fragment {
 
     private Person subject;
-    private List<Attendance> attendanceList;
+    private List<Attendance> attendanceList = new ArrayList<>();
     private float attendance;
 
     private TextView nameTv;
+    private TextView idTv;
     private TextView attendanceTv;
     private TextView deviceTv;
     private RecyclerView attendanceListRv;
@@ -52,15 +54,17 @@ public class PersonDataFragment extends Fragment {
         final View v = inflater.inflate(R.layout.fragment_person_data, container, false);
 
         nameTv = v.findViewById(R.id.tv_person_name);
+        idTv = v.findViewById(R.id.tv_person_id);
         attendanceTv = v.findViewById(R.id.tv_attendance);
         deviceTv = v.findViewById(R.id.tv_device);
         attendanceListRv = v.findViewById(R.id.rv_attendance_single_person);
 
         nameTv.setText(subject.name);
+        idTv.setText(subject.id);
         deviceTv.setText(subject.deviceModel);
-        attendanceTv.setText(String.format(Locale.getDefault(), "%.0f%%", Fake.attendance() * 100));
+//        attendanceTv.setText(String.format(Locale.getDefault(), "%.0f%%", Fake.attendance() * 100));
 
-        attendanceList = Fake.generateAttendance(subject);
+//        attendanceList = Fake.generateAttendance(subject);
         attendanceListRv.setAdapter(new AttendanceListAdapter(attendanceList));
         return v;
     }

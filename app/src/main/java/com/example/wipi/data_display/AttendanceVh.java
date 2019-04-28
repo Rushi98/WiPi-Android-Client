@@ -1,5 +1,7 @@
 package com.example.wipi.data_display;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,20 +23,23 @@ public class AttendanceVh extends RecyclerView.ViewHolder {
 
     private TextView macTv;
 
-    private TextView lastHitTv;
+//    private TextView lastHitTv;
+//
+//    private TextView distanceTv;
+//
+//    private TextView confidenceTv;
 
-    private TextView distanceTv;
-
-    private TextView confidenceTv;
+    private TextView numberOfHitsTv;
 
     private Group detailsGroup;
 
     public AttendanceVh(@NonNull final View itemView) {
         super(itemView);
         personNameTv = itemView.findViewById(R.id.tv_person_name);
-        lastHitTv = itemView.findViewById(R.id.tv_last_hit);
-        distanceTv = itemView.findViewById(R.id.tv_distance);
-        confidenceTv = itemView.findViewById(R.id.tv_confidence);
+//        lastHitTv = itemView.findViewById(R.id.tv_last_hit);
+//        distanceTv = itemView.findViewById(R.id.tv_distance);
+//        confidenceTv = itemView.findViewById(R.id.tv_confidence);
+        numberOfHitsTv = itemView.findViewById(R.id.tv_number_of_hits);
         detailsGroup = itemView.findViewById(R.id.group_details);
         macTv = itemView.findViewById(R.id.tv_mac);
     }
@@ -51,9 +56,10 @@ public class AttendanceVh extends RecyclerView.ViewHolder {
         }
         personNameTv.setText(personName);
         macTv.setText(mac);
-        lastHitTv.setText(attendance.lastHit);
-        distanceTv.setText(String.format(Locale.ENGLISH, "~ %.2f m", attendance.distance));
-        confidenceTv.setText(String.format(Locale.ENGLISH, "%.0f %%", attendance.confidence * 100));
+//        lastHitTv.setText(attendance.lastHit);
+//        distanceTv.setText(String.format(Locale.ENGLISH, "~ %.2f m", attendance.distance));
+//        confidenceTv.setText(String.format(Locale.ENGLISH, "%.0f %%", attendance.confidence * 100));
+        numberOfHitsTv.setText(String.valueOf(attendance.numberOfHits));
         itemView.setOnClickListener(v -> toggleDetailsVisibility());
     }
 

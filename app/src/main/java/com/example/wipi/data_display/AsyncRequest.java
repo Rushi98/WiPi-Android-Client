@@ -30,6 +30,7 @@ public abstract class AsyncRequest extends AsyncTask<String, Void, String> {
             StringBuilder result = new StringBuilder();
             String inputLine;
             while ((inputLine = in.readLine()) != null)
+//                Log.e("new data", inputLine);
                 result.append(inputLine).append("\n");
 
             in.close();

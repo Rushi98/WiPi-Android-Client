@@ -27,25 +27,25 @@ public class Fake {
     private static final String smartPhoneModels[] = {"Samsung Galaxy S III"//, "Xiaomi Mi 2", "Samsung Galaxy S4", "Nokia", "Apple iPhone", "iPhone 6", "iPhone 6 Plus", "iPhone 5s", "Samsung Galaxy S4", "Samsung Galaxy S5", "iPhone 4s", "HTC One M8", "Samsung Galaxy S III", "Samsung Galaxy Note 3", "iPhone 7", "Samsung Galaxy S7", "Redmi note 3", "OnePlus 3t", "Redmi 3s prime", "Lenovo K4 note", "Samsung Galaxy Note9", "Huawei P20", "IPhone XS", "Samsung Galaxy S9", "Samsung Galaxy S9 Plus", "Samsung Galaxy s9 Lite"
     };
 
-    public static List<Attendance> getAttendance(String startTime) {
-        Random random = new Random();
-        int size = 30 + random.nextInt(30);
-        Date zeroTime = TIMESTAMP_FORMAT.parse(startTime, new ParsePosition(0));
-        List<Attendance> attendanceList = new ArrayList<>(size);
-        List<String> peopleNames = generatePeopleNameList(size);
-        List<String> macList = generateMacList(size);
-        for (int i = 0; i < size; i++) {
-            Attendance attendance = new Attendance();
-            attendance.confidence = random.nextFloat();
-            attendance.distance = 0.2f + random.nextFloat() * 5.0f;
-            Date lastHit = new Date(zeroTime.getTime() + random.nextInt(50 * 60_000));
-            attendance.lastHit = TIMESTAMP_FORMAT.format(lastHit);
-            attendance.macAddress = macList.get(i);
-            attendance.personName = peopleNames.get(i);
-            attendanceList.add(attendance);
-        }
-        return attendanceList;
-    }
+//    public static List<Attendance> getAttendance(String startTime) {
+//        Random random = new Random();
+//        int size = 30 + random.nextInt(30);
+//        Date zeroTime = TIMESTAMP_FORMAT.parse(startTime, new ParsePosition(0));
+//        List<Attendance> attendanceList = new ArrayList<>(size);
+//        List<String> peopleNames = generatePeopleNameList(size);
+//        List<String> macList = generateMacList(size);
+//        for (int i = 0; i < size; i++) {
+//            Attendance attendance = new Attendance();
+//            attendance.confidence = random.nextFloat();
+//            attendance.distance = 0.2f + random.nextFloat() * 5.0f;
+//            Date lastHit = new Date(zeroTime.getTime() + random.nextInt(50 * 60_000));
+//            attendance.lastHit = TIMESTAMP_FORMAT.format(lastHit);
+//            attendance.macAddress = macList.get(i);
+//            attendance.personName = peopleNames.get(i);
+//            attendanceList.add(attendance);
+//        }
+//        return attendanceList;
+//    }
 
     private static List<String> generatePeopleNameList(int size) {
         List<String> list = new ArrayList<>(size);
@@ -114,31 +114,31 @@ public class Fake {
         return models;
     }
 
-    public static List<Attendance> generateAttendance(Person subject) {
-        List<String> sessions = getSessionList();
-        Random random = new Random();
-        float attendance = 0.5f + random.nextFloat() * 0.5f;
-        List<Attendance> attendanceList = new ArrayList<>(sessions.size());
-        for (String session : sessions) {
-            Attendance a = new Attendance();
-            a.personName = subject.name;
-            a.macAddress = subject.deviceMac;
-            if (random.nextFloat() > attendance) {
-                // absent
-                a.lastHit = "";
-                a.distance = 0;
-                a.confidence = 1.0f;
-            } else {
-                Date zeroTime = TIMESTAMP_FORMAT.parse(session, new ParsePosition(0));
-                Date lastHit = new Date(zeroTime.getTime() + random.nextInt(50 * 60_000));
-                a.lastHit = TIMESTAMP_FORMAT.format(lastHit);
-                a.distance = 0.2f + random.nextFloat() * 5.0f;
-                a.confidence = random.nextFloat();
-            }
-            attendanceList.add(a);
-        }
-        return attendanceList;
-    }
+//    public static List<Attendance> generateAttendance(Person subject) {
+//        List<String> sessions = getSessionList();
+//        Random random = new Random();
+//        float attendance = 0.5f + random.nextFloat() * 0.5f;
+//        List<Attendance> attendanceList = new ArrayList<>(sessions.size());
+//        for (String session : sessions) {
+//            Attendance a = new Attendance();
+//            a.personName = subject.name;
+//            a.macAddress = subject.deviceMac;
+//            if (random.nextFloat() > attendance) {
+//                // absent
+//                a.lastHit = "";
+//                a.distance = 0;
+//                a.confidence = 1.0f;
+//            } else {
+//                Date zeroTime = TIMESTAMP_FORMAT.parse(session, new ParsePosition(0));
+//                Date lastHit = new Date(zeroTime.getTime() + random.nextInt(50 * 60_000));
+//                a.lastHit = TIMESTAMP_FORMAT.format(lastHit);
+//                a.distance = 0.2f + random.nextFloat() * 5.0f;
+//                a.confidence = random.nextFloat();
+//            }
+//            attendanceList.add(a);
+//        }
+//        return attendanceList;
+//    }
 
     public static List<String> getSessionList() {
         Random random = new Random();

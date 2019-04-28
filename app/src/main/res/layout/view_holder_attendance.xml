@@ -19,74 +19,93 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Navin Viswan" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_label_last_hit"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:labelFor="@+id/tv_last_hit"-->
+            <!--android:text="@string/last_hit"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tv_person_name" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_last_hit"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--app:layout_constraintBaseline_toBaselineOf="@+id/tv_label_last_hit"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/tv_label_last_hit"-->
+            <!--tools:text="10:56 AM" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_label_distance"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:labelFor="@+id/tv_distance"-->
+            <!--android:text="@string/distance"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tv_label_last_hit" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_distance"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--app:layout_constraintBaseline_toBaselineOf="@+id/tv_label_distance"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/tv_label_distance"-->
+            <!--tools:text="~ 1.5 m" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_label_confidence"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:text="@string/confidence"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tv_label_distance" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_confidence"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--app:layout_constraintBaseline_toBaselineOf="@+id/tv_label_confidence"-->
+            <!--app:layout_constraintStart_toEndOf="@+id/tv_label_confidence"-->
+            <!--tools:text="87%" />-->
 
         <TextView
-            android:id="@+id/tv_label_last_hit"
+            android:id="@+id/tv_label_hits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:labelFor="@+id/tv_last_hit"
-            android:text="@string/last_hit"
+            android:labelFor="@+id/tv_label_hits"
+            android:text="@string/number_of_hits"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_person_name" />
 
         <TextView
-            android:id="@+id/tv_last_hit"
+            android:id="@+id/tv_number_of_hits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_label_last_hit"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_last_hit"
-            tools:text="10:56 AM" />
+            android:text="0"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_label_hits"
+            app:layout_constraintStart_toEndOf="@+id/tv_label_hits" />
 
-        <TextView
-            android:id="@+id/tv_label_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:labelFor="@+id/tv_distance"
-            android:text="@string/distance"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_last_hit" />
-
-        <TextView
-            android:id="@+id/tv_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_label_distance"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_distance"
-            tools:text="~ 1.5 m" />
-
-        <TextView
-            android:id="@+id/tv_label_confidence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/confidence"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_label_distance" />
-
-        <TextView
-            android:id="@+id/tv_confidence"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_label_confidence"
-            app:layout_constraintStart_toEndOf="@+id/tv_label_confidence"
-            tools:text="87%" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="tv_confidence,tv_label_confidence,tv_distance,tv_label_distance,tv_last_hit,tv_label_last_hit"
+            app:constraint_referenced_ids="tv_label_hits,tv_number_of_hits"
             tools:visibility="visible" />
 
         <TextView

@@ -8,17 +8,20 @@ import android.os.Parcelable;
  */
 public class Person implements Parcelable {
     public String name;
+    public String id;
     public String deviceMac;
     public String deviceModel;
 
     public Person() {
         name = null;
+        id = null;
         deviceMac = null;
         deviceModel = null;
     }
 
     protected Person(Parcel in) {
         name = in.readString();
+        id = in.readString();
         deviceMac = in.readString();
         deviceModel = in.readString();
     }
@@ -43,6 +46,7 @@ public class Person implements Parcelable {
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(name);
+        dest.writeString(id);
         dest.writeString(deviceMac);
         dest.writeString(deviceModel);
     }

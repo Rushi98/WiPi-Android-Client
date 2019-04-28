@@ -23,7 +23,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonVh> {
         this.people = people;
     }
 
-    private void setPeople(final List<Person> people) {
+    public void setPeople(final List<Person> people) {
         this.people = people;
         notifyDataSetChanged();
     }

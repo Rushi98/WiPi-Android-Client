@@ -15,18 +15,26 @@ public class Attendance {
 
     public String macAddress;
 
+    public int numberOfHits;
+
+    public Attendance (String personName, String macAddress, int numberOfHits) {
+        this.personName = personName;
+        this.macAddress = macAddress;
+        this.numberOfHits = numberOfHits;
+    }
+
     /**
      * Timestamp in {@link #TIMESTAMP_FORMAT} format.
      */
-    public String lastHit;
+//    public String lastHit;
 
     /**
      * Unit : meter
      */
-    public float distance;
+//    public float distance;
 
     /**
      * range : [0f,1f]
      */
-    public float confidence;
+//    public float confidence;
 }

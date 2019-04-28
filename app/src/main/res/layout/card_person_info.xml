@@ -21,6 +21,15 @@
             tools:text="Lewis Cormen" />
 
         <TextView
+            android:id="@+id/tv_person_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_person_name" />
+
+        <TextView
             android:id="@+id/tv_attendance_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +37,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/attendance"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_person_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_person_id" />
 
         <TextView
             android:id="@+id/tv_attendance"
@@ -37,7 +46,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@+id/tv_attendance_label"
-            app:layout_constraintTop_toBottomOf="@+id/tv_person_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_person_id"
             tools:text="76%" />
 
         <TextView

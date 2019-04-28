@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">WiPi</string>
     <string name="last_hit">last hit</string>
+    <string name="number_of_hits">number of hits</string>
     <string name="distance">distance</string>
     <string name="confidence">confidence</string>
 
