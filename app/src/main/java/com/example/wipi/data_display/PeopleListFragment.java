@@ -81,6 +81,7 @@ public class PeopleListFragment extends Fragment {
                 person.name = dataItem.getString("name");
                 person.id = dataItem.getString("bits_id");
                 person.deviceMac = dataItem.getString("mac_address");
+                person.deviceModel = dataItem.getString("device_make");
                 people.add(person);
             }
         } catch (NullPointerException e) {
