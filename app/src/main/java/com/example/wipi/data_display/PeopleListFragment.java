@@ -72,6 +72,8 @@ public class PeopleListFragment extends Fragment {
             jsonArray = new JSONArray(peopleData);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
 
         try {

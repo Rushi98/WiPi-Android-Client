@@ -111,6 +111,8 @@ public class SessionListFragment extends Fragment {
             jsonArray = new JSONArray(sessList);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
 
         try {

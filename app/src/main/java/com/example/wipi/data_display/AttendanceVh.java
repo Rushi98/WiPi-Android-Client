@@ -47,7 +47,7 @@ public class AttendanceVh extends RecyclerView.ViewHolder {
     public void populate(Attendance attendance) {
         final String personName;
         final String mac;
-        if (attendance.personName != null) {
+        if (!(attendance.personName.equals("None"))) {
             personName = attendance.personName;
             mac = "";
         } else {

@@ -37,7 +37,8 @@
             android:layout_marginTop="8dp"
             android:text="@string/attendance"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_person_id" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_person_id"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_attendance"
@@ -47,7 +48,8 @@
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@+id/tv_attendance_label"
             app:layout_constraintTop_toBottomOf="@+id/tv_person_id"
-            tools:text="76%" />
+            tools:text="76%"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_device_label"
